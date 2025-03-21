@@ -10,16 +10,17 @@ const helmet = require("helmet");
 
 // Security Middleware
 app.use(helmet()); // Adds security headers
+
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https://food-delivery-hg5i.vercel.app"],
         scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-        imgSrc: ["'self'", "data:", "blob:", "https://food-delivery-tau-sooty.vercel.app"],
-        connectSrc: ["'self'", "https://food-delivery-tau-sooty.vercel.app"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        connectSrc: ["'self'", "https://api.example.com"], // Adjust if using external APIs
+        fontSrc: ["'self'", "https://fonts.googleapis.com", "https://fonts.gstatic.com"],
       },
     },
   })
@@ -33,8 +34,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload());
 
-// Serve React Frontend
 app.use(express.static(path.join(__dirname, "build")));
+
+// Serve favicon from the build folder
+app.get("/favicon.ico", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "favicon.ico"));
+});
+
 
 // API Routes
 const singUpRoute = require("./Routes/SingUp");
