@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser')
 const { Users } = require('./Models/Models')
 const fileUpload = require("express-fileupload");
 const path = require('path')
+const helmet = require('helmet')
+
 
 
 
@@ -14,7 +16,24 @@ const path = require('path')
 const PORT = process.env.PORT
 
 // MiddleWares
-app.use(cors())
+app.use(
+  cors({
+    origin: "https://food-delivery-vv75.vercel.app", // Replace with your React frontend URL
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  })
+);
+app.use(helmet())
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https://food-delivery-vv75.vercel.app"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+    },
+  })
+);
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
