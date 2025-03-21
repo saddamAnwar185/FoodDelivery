@@ -18,7 +18,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; img-src 'self' data: blob:;"
+          "value": "default-src 'self'; img-src 'self' data: blob: https://food-delivery-tau-sooty.vercel.app;"
         }
       ]
     }
