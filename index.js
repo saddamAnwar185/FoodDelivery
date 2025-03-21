@@ -11,14 +11,16 @@ const helmet = require("helmet");
 // Security Middleware
 app.use(helmet()); // Adds security headers
 app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      imgSrc: ["'self'", "data:", "blob:"],
-      connectSrc: ["'self'", "https://your-api-url.vercel.app"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        imgSrc: ["'self'", "data:", "blob:", "https://food-delivery-tau-sooty.vercel.app"],
+        connectSrc: ["'self'", "https://food-delivery-tau-sooty.vercel.app"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      },
     },
   })
 );
